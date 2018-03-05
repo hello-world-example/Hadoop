@@ -11,5 +11,14 @@
 
     <artifactId>hadoop-core</artifactId>
 
+    <dependencies>
+
+        <dependency>
+            <groupId>org.apache.hadoop</groupId>
+            <artifactId>hadoop-client</artifactId>
+            <version>2.7.3</version>
+        </dependency>
+
+    </dependencies>
 
 </project>
