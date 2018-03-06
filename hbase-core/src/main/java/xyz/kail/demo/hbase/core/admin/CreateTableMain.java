@@ -1,17 +1,12 @@
 package xyz.kail.demo.hbase.core.admin;
 
-import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.ClusterStatus;
-import org.apache.hadoop.hbase.HBaseConfiguration;
-import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.Admin;
 import org.apache.hadoop.hbase.client.Connection;
-import org.apache.hadoop.hbase.client.ConnectionFactory;
-import org.apache.hadoop.hbase.client.Table;
 
 import java.io.IOException;
-import java.util.Iterator;
-import java.util.Map;
+
+import xyz.kail.demo.hbase.core.util.HBaseUtils;
 
 /**
  * Created by kail on 2018/3/5.
@@ -19,18 +14,25 @@ import java.util.Map;
 public class CreateTableMain {
 
     public static void main(String[] args) throws IOException {
-        Configuration hbaseConf = HBaseConfiguration.create();
-        Connection connection = ConnectionFactory.createConnection(hbaseConf);
-
-
+        Connection connection = HBaseUtils.getConnection();
         Admin admin = connection.getAdmin();
-
 
         ClusterStatus clusterStatus = admin.getClusterStatus();
         System.out.println(clusterStatus);
+        System.out.println();
+
+        System.out.println(clusterStatus.getClusterId());
+        System.out.println(clusterStatus.getHBaseVersion());
+        System.out.println(clusterStatus.getMaster().toShortString());
+        System.out.println(clusterStatus.getAverageLoad());
+        System.out.println(clusterStatus.getRegionsCount());
+        System.out.println();
 
         int masterInfoPort = admin.getMasterInfoPort();
         System.out.println(masterInfoPort);
+
+
+        HBaseUtils.close(connection);
 
     }
 
