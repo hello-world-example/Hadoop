@@ -24,6 +24,13 @@
             <version>${hbase-client.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.46</version>
+        </dependency>
+
+
     </dependencies>
 
 </project>

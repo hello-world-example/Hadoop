@@ -1,15 +1,21 @@
 package xyz.kail.demo.hbase.core.util;
 
+
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.hbase.Cell;
+import org.apache.hadoop.hbase.CellUtil;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.HColumnDescriptor;
 import org.apache.hadoop.hbase.HTableDescriptor;
 import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.Connection;
 import org.apache.hadoop.hbase.client.ConnectionFactory;
+import org.apache.hadoop.hbase.util.Bytes;
 
 import java.io.Closeable;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 import java.util.Set;
 
@@ -60,6 +66,19 @@ public class HBaseUtils {
         }
         System.out.println();
         System.out.println();
+    }
+
+    public static void printCell(Cell cell) {
+        System.out.print(Bytes.toStringBinary(CellUtil.cloneRow(cell)));
+        System.out.print(":");
+        System.out.print(Bytes.toStringBinary(CellUtil.cloneFamily(cell)));
+        System.out.print(":");
+        System.out.print(Bytes.toStringBinary(CellUtil.cloneQualifier(cell)));
+        System.out.print(":");
+        System.out.println(cell.getTimestamp() + "(" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(new Date(cell.getTimestamp())) + ")");
+        System.out.print("      ");
+        System.out.println(Bytes.toString(CellUtil.cloneValue(cell)));
+
     }
 
 }
