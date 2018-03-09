@@ -1,4 +1,4 @@
-package xyz.kail.demo.hbase.core;
+package xyz.kail.demo.hbase.core.admin;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseConfiguration;
