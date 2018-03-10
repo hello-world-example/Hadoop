@@ -1,4 +1,4 @@
-package xyz.kail.demo.hadoop.core.mapreduce.wordcount;
+package xyz.kail.demo.hadoop.core.mapreduce.emptyreduce;
 
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.Path;
@@ -6,7 +6,6 @@ import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
-import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
@@ -18,11 +17,17 @@ import org.slf4j.LoggerFactory;
 import xyz.kail.demo.hadoop.core.util.MapReduceUtil;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 import java.util.StringTokenizer;
 
-public class WordCountMapReduce extends Configured implements Tool {
+/**
+ * Created by kail on 2018/3/10.
+ */
+public class EmptyReduce extends Configured implements Tool {
 
-    private static final Logger logger = LoggerFactory.getLogger(WordCountMapReduce.class);
+    private static final Logger logger = LoggerFactory.getLogger(EmptyReduce.class);
 
     private static final String NEW_LINE = System.getProperty("line.separator");
 
@@ -42,39 +47,37 @@ public class WordCountMapReduce extends Configured implements Tool {
             //将输入的数据先按行进行分割
             StringTokenizer tokenizerArticle = new StringTokenizer(stuInfo, NEW_LINE);
 
-            //分别对每一行进行处理  
+            //分别对每一行进行处理
             while (tokenizerArticle.hasMoreTokens()) {
+
 
                 String nextToken = tokenizerArticle.nextToken();
                 logger.info("nextToken : " + nextToken);
 
                 // 每行按空格划分
                 StringTokenizer tokenizer = new StringTokenizer(nextToken);
+
+
+                Map<String, Integer> map = new HashMap<>();
                 for (; tokenizer.hasMoreTokens(); ) {
                     String word = tokenizer.nextToken();
 
-                    logger.info("word :" + word);
+                    if (!map.containsKey(word)) {
+                        map.put(word, 0);
+                    }
+                    map.put(word, map.get(word) + 1);
 
-                    context.write(new Text(word), new IntWritable(1)); // 输出学生姓名和成绩
+                }
+
+                Set<Map.Entry<String, Integer>> entries = map.entrySet();
+                for (Map.Entry<String, Integer> entry : entries) {
+                    logger.warn(entry.getKey());
+                    logger.warn(entry.getValue().toString());
+                    logger.warn("");
+                    context.write(new Text(entry.getKey()), new IntWritable(entry.getValue()));
                 }
 
             }
-        }
-
-    }
-
-    /**
-     * <KEYIN,VALUEIN,KEYOUT,VALUEOUT>
-     */
-    public static class MyReduce extends Reducer<Text, IntWritable, Text, IntWritable> {
-
-        @Override
-        protected void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
-            int count = 0;
-            for (IntWritable value : values) {
-                count++;
-            }
-            context.write(key, new IntWritable(count));
         }
 
     }
@@ -83,13 +86,12 @@ public class WordCountMapReduce extends Configured implements Tool {
     public int run(String[] args) throws Exception {
 
         Job job = Job.getInstance(getConf(), "wordCount");
-        job.setJarByClass(WordCountMapReduce.class);
+        job.setJarByClass(EmptyReduce.class);
 
         /*
          * 设置 Map 和 Reduce 类
          */
-        job.setMapperClass(MyMap.class);
-        job.setReducerClass(MyReduce.class);
+        job.setMapperClass(EmptyReduce.MyMap.class);
 
         /*
          * 设置 Map 输出类型
@@ -118,9 +120,10 @@ public class WordCountMapReduce extends Configured implements Tool {
 
     public static void main(String[] args) throws Exception {
 
-        args = MapReduceUtil.agrsIO(WordCountMapReduce.class, args);
+        args = MapReduceUtil.agrsIO(EmptyReduce.class, args);
 
-        int ret = ToolRunner.run(new WordCountMapReduce(), args);
+        int ret = ToolRunner.run(new EmptyReduce(), args);
         System.exit(ret);
     }
-} 
+
+}

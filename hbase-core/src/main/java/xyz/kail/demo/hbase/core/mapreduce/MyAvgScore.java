@@ -1,6 +1,7 @@
 package xyz.kail.demo.hbase.core.mapreduce;
 
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.TableName;
@@ -25,15 +26,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.StringTokenizer;
 
 
-public class MyAvgScore implements Tool {
+public class MyAvgScore extends Configured implements Tool {
 
     private static final Logger logger = LoggerFactory.getLogger(MyAvgScore.class);
-
-    private Configuration configuration;
 
     private static final String NEW_LINE = System.getProperty("line.separator");
 
@@ -42,12 +40,12 @@ public class MyAvgScore implements Tool {
      */
     public static class MyMap extends Mapper<Object, Text, Text, IntWritable> {
 
-        Connection connection = null;
+        Connection hbaseConfig = null;
 
         {
             Configuration hbaseConf = HBaseConfiguration.create();
             try {
-                connection = ConnectionFactory.createConnection(hbaseConf);
+                hbaseConfig = ConnectionFactory.createConnection(hbaseConf);
             } catch (IOException e) {
                 logger.error("HBase 链接初始化失败", e);
 
@@ -81,7 +79,7 @@ public class MyAvgScore implements Tool {
 
                 context.write(stu, new IntWritable(intScore));  //zs 90
 
-                Table table = connection.getTable(TableName.valueOf("stu"));
+                Table table = hbaseConfig.getTable(TableName.valueOf("stu"));
 
                 Put p1 = new Put(Bytes.toBytes("name" + lineNum));
                 p1.addColumn(Bytes.toBytes("name"), Bytes.toBytes("1"), Bytes.toBytes(name));
@@ -99,60 +97,36 @@ public class MyAvgScore implements Tool {
     }
 
 
-    /**
-     *
-     */
-    public static class MyReduce extends Reducer<Text, IntWritable, Text, IntWritable> {
-
-        @Override
-        protected void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
-            int sum = 0;
-            int count = 0;
-            for (IntWritable value : values) {
-                sum += value.get();
-                count++;
-            }
-            int avg = sum / count;
-            context.write(key, new IntWritable(avg));
-        }
-
-    }
-
     public int run(String[] args) throws Exception {
 
-        Job job = Job.getInstance(getConf());
+        Job job = Job.getInstance(getConf(), "avgscore");
         job.setJarByClass(MyAvgScore.class);
-        job.setJobName("avgscore");
+
+
+        job.setMapperClass(MyMap.class);
 
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(IntWritable.class);
 
-        job.setMapperClass(MyMap.class);
-        job.setCombinerClass(MyReduce.class);
-        job.setReducerClass(MyReduce.class);
 
+        /*
+         * 设置 输入出处路径
+         */
         job.setInputFormatClass(TextInputFormat.class);
+        FileInputFormat.addInputPath(job, new Path(args[0])); // 设置输入文件路径
+
         job.setOutputFormatClass(TextOutputFormat.class);
+        FileOutputFormat.setOutputPath(job, new Path(args[1])); // 设置输出文件路径
 
-        FileInputFormat.addInputPath(job, new Path(args[0]));
-        FileOutputFormat.setOutputPath(job, new Path(args[1]));
-
+        /*
+         * 等待执行完成
+         */
         boolean success = job.waitForCompletion(true);
 
         return success ? 0 : 1;
 
     }
 
-    @Override
-    public Configuration getConf() {
-        return configuration;
-    }
-
-    @Override
-    public void setConf(Configuration conf) {
-        conf = new Configuration();
-        configuration = conf;
-    }
 
     public static void main(String[] args) throws Exception {
 
