@@ -1,8 +1,7 @@
-package xyz.kail.demo.hadoop.core.mapreduce.avgscore;
+package xyz.kail.demo.hadoop.core.mapreduce.wordcount;
 
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.FloatWritable;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
@@ -21,14 +20,9 @@ import xyz.kail.demo.hadoop.core.util.MapReduceUtil;
 import java.io.IOException;
 import java.util.StringTokenizer;
 
-/***
- * 定义一个AvgScore 求学生的平均值 要实现一个Tool 工具类，是为了初始化一个hadoop配置实例
- *
- * [自己实现 一个MapReduce 示例](http://blog.csdn.net/liuc0317/article/details/8716368)
- */
-public class MyAvgScore extends Configured implements Tool {
+public class WordCountMapReduce extends Configured implements Tool {
 
-    private static final Logger logger = LoggerFactory.getLogger(MyAvgScore.class);
+    private static final Logger logger = LoggerFactory.getLogger(WordCountMapReduce.class);
 
     private static final String NEW_LINE = System.getProperty("line.separator");
 
@@ -39,28 +33,31 @@ public class MyAvgScore extends Configured implements Tool {
 
         @Override
         protected void map(Object key, Text value, Context context) throws IOException, InterruptedException {
-            String stuInfo = value.toString();//将输入的纯文本的数据转换成String  
+            logger.info("map key:" + key);
+            logger.info("map value:" + value);
 
-            logger.info("MapSudentInfo:" + stuInfo);
+
+            String stuInfo = value.toString();
 
             //将输入的数据先按行进行分割
-
             StringTokenizer tokenizerArticle = new StringTokenizer(stuInfo, NEW_LINE);
 
             //分别对每一行进行处理  
             while (tokenizerArticle.hasMoreTokens()) {
+
+                String nextToken = tokenizerArticle.nextToken();
+                logger.info("nextToken : " + nextToken);
+
                 // 每行按空格划分
-                StringTokenizer tokenizer = new StringTokenizer(tokenizerArticle.nextToken());
+                StringTokenizer tokenizer = new StringTokenizer(nextToken);
+                for (; tokenizer.hasMoreTokens(); ) {
+                    String word = tokenizer.nextToken();
 
-                String name = tokenizer.nextToken();//学生姓名
-                String score = tokenizer.nextToken();//学生成绩
+                    logger.info("word :" + word);
 
-                Text stu = new Text(name);
-                int intScore = Integer.parseInt(score);
+                    context.write(new Text(word), new IntWritable(1)); // 输出学生姓名和成绩
+                }
 
-                logger.info("MapStu:" + stu.toString() + " " + intScore);
-
-                context.write(stu, new IntWritable(intScore)); // 输出学生姓名和成绩
             }
         }
 
@@ -69,19 +66,15 @@ public class MyAvgScore extends Configured implements Tool {
     /**
      * <KEYIN,VALUEIN,KEYOUT,VALUEOUT>
      */
-    public static class MyReduce extends Reducer<Text, IntWritable, Text, FloatWritable> {
+    public static class MyReduce extends Reducer<Text, IntWritable, Text, IntWritable> {
 
         @Override
         protected void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
-            float sum = 0;
-            float count = 0;
-
+            int count = 0;
             for (IntWritable value : values) {
-                sum += value.get();//计算总分
-                count++;//统计总科目  
+                count++;
             }
-            float avg = sum / count;
-            context.write(key, new FloatWritable(avg));//输出学生姓名和平均值
+            context.write(key, new IntWritable(count));//输出学生姓名和平均值
         }
 
     }
@@ -89,8 +82,8 @@ public class MyAvgScore extends Configured implements Tool {
     @Override
     public int run(String[] args) throws Exception {
 
-        Job job = Job.getInstance(getConf(), "avgScore");
-        job.setJarByClass(MyAvgScore.class);
+        Job job = Job.getInstance(getConf(), "wordCount");
+        job.setJarByClass(WordCountMapReduce.class);
 
         /*
          * 设置 Map 和 Reduce 类
@@ -125,9 +118,9 @@ public class MyAvgScore extends Configured implements Tool {
 
     public static void main(String[] args) throws Exception {
 
-        args = MapReduceUtil.agrsIO(MyAvgScore.class, args);
+        args = MapReduceUtil.agrsIO(WordCountMapReduce.class, args);
 
-        int ret = ToolRunner.run(new MyAvgScore(), args);
+        int ret = ToolRunner.run(new WordCountMapReduce(), args);
         System.exit(ret);
     }
 } 
