@@ -1,6 +1,6 @@
-package xyz.kail.demo.hadoop.core.mapreduce;
+package xyz.kail.demo.hadoop.core.mapreduce.avgscore;
 
-import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.FloatWritable;
 import org.apache.hadoop.io.IntWritable;
@@ -16,6 +16,7 @@ import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import xyz.kail.demo.hadoop.core.util.MapReduceUtil;
 
 import java.io.IOException;
 import java.util.StringTokenizer;
@@ -25,11 +26,9 @@ import java.util.StringTokenizer;
  *
  * [自己实现 一个MapReduce 示例](http://blog.csdn.net/liuc0317/article/details/8716368)
  */
-public class MyAvgScore implements Tool {
+public class MyAvgScore extends Configured implements Tool {
 
     private static final Logger logger = LoggerFactory.getLogger(MyAvgScore.class);
-
-    private Configuration configuration;
 
     private static final String NEW_LINE = System.getProperty("line.separator");
 
@@ -90,37 +89,44 @@ public class MyAvgScore implements Tool {
     @Override
     public int run(String[] args) throws Exception {
 
-        Job job = Job.getInstance(getConf(), "avgscore");
+        Job job = Job.getInstance(getConf(), "avgScore");
         job.setJarByClass(MyAvgScore.class);
 
-        job.setOutputKeyClass(Text.class);
-        job.setOutputValueClass(IntWritable.class);
+        /*
+         * 设置 Map 和 Reduce 类
+         */
         job.setMapperClass(MyMap.class);
-        job.setCombinerClass(MyReduce.class);
         job.setReducerClass(MyReduce.class);
+
+        /*
+         * 设置 Map 输出类型
+         */
+        job.setMapOutputKeyClass(Text.class); //
+        job.setMapOutputValueClass(IntWritable.class); //
+
+        /*
+         * 设置 输入出处路径
+         */
         job.setInputFormatClass(TextInputFormat.class);
+        FileInputFormat.addInputPath(job, new Path(args[0])); // 设置输入文件路径
+
         job.setOutputFormatClass(TextOutputFormat.class);
-        FileInputFormat.addInputPath(job, new Path(args[0]));//设置输入文件路径
-        FileOutputFormat.setOutputPath(job, new Path(args[1]));//设置输出文件路径
+        FileOutputFormat.setOutputPath(job, new Path(args[1])); // 设置输出文件路径
+
+        /*
+         * 等待执行完成
+         */
         boolean success = job.waitForCompletion(true);
 
         return success ? 0 : 1;
 
     }
 
-    @Override
-    public Configuration getConf() {
-        return configuration;
-    }
-
-    @Override
-    public void setConf(Configuration conf) {
-        conf = new Configuration();
-        configuration = conf;
-    }
 
     public static void main(String[] args) throws Exception {
-        //在eclipse 工具上配置输入和输出参数
+
+        args = MapReduceUtil.agrsIO(MyAvgScore.class, args);
+
         int ret = ToolRunner.run(new MyAvgScore(), args);
         System.exit(ret);
     }
