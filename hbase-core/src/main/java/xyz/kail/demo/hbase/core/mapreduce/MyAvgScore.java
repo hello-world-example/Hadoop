@@ -8,6 +8,7 @@ import org.apache.hadoop.hbase.client.Connection;
 import org.apache.hadoop.hbase.client.ConnectionFactory;
 import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.client.Table;
+import org.apache.hadoop.hbase.mapreduce.TableOutputFormat;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
@@ -107,9 +108,8 @@ public class MyAvgScore implements Tool {
         protected void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
             int sum = 0;
             int count = 0;
-            Iterator<IntWritable> iterator = values.iterator();
-            while (iterator.hasNext()) {
-                sum += iterator.next().get();
+            for (IntWritable value : values) {
+                sum += value.get();
                 count++;
             }
             int avg = sum / count;
@@ -158,6 +158,8 @@ public class MyAvgScore implements Tool {
 
         int ret = ToolRunner.run(new MyAvgScore(), args);
         System.exit(ret);
+
+        TableOutputFormat<Object> objectTableOutputFormat = new TableOutputFormat<>();
     }
 
 
