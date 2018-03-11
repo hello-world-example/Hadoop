@@ -1,5 +1,6 @@
 package xyz.kail.demo.hadoop.core.mapreduce.wordcount;
 
+import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
@@ -82,7 +83,11 @@ public class WordCountMapReduce extends Configured implements Tool {
     @Override
     public int run(String[] args) throws Exception {
 
-        Job job = Job.getInstance(getConf(), "wordCount");
+        Configuration conf = getConf();
+
+//        conf.set("fs.defaultFS", "hdfs://localhost:9000/hbase");
+
+        Job job = Job.getInstance(conf, "wordCount");
         job.setJarByClass(WordCountMapReduce.class);
 
         /*
@@ -119,6 +124,9 @@ public class WordCountMapReduce extends Configured implements Tool {
     public static void main(String[] args) throws Exception {
 
         args = MapReduceUtil.agrsIO(WordCountMapReduce.class, args);
+
+        args[0] = "/word_count.csv";
+        args[1] = "/123/input";
 
         int ret = ToolRunner.run(new WordCountMapReduce(), args);
         System.exit(ret);

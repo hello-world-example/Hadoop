@@ -23,7 +23,7 @@ public class PutMain {
 
         Connection connection = HBaseUtils.getConnection();
 
-        TableName kailTestTableName = TableName.valueOf("_kail_test_remark");
+        TableName kailTestTableName = TableName.valueOf("wordcount");
         Table table = connection.getTable(kailTestTableName);
 
 
