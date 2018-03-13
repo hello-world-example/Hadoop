@@ -25,7 +25,9 @@ public class HBaseKVMapper extends Mapper<LongWritable, Text, ImmutableBytesWrit
         String[] line = value.toString().split(",");
 
         ImmutableBytesWritable rowKey = new ImmutableBytesWritable(line[0].getBytes());
+
         KeyValue keyValue = new KeyValue(rowKey.get(), "f".getBytes(), "ad".getBytes(), line[1].getBytes());
+
         context.write(rowKey, keyValue);
 
     }
