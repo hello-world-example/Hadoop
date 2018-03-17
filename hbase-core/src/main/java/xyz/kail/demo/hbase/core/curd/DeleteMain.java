@@ -20,10 +20,11 @@ public class DeleteMain {
     public static void main(String[] args) throws IOException {
         Connection connection = HBaseUtils.getConnection();
 
-        Table table = connection.getTable(TableName.valueOf("_kail_test_remark"));
+        Table table = connection.getTable(TableName.valueOf("test"));
 
-        Delete delete = new Delete(Bytes.toBytes("123_rowkey"));
-        delete.addColumn(Bytes.toBytes("remark"), Bytes.toBytes("200"), 1L);
+        Delete delete = new Delete(Bytes.toBytes("k1"));
+        delete.addColumn(Bytes.toBytes("f"), Bytes.toBytes("c"), 1520865214884L);
+        delete.addColumns(Bytes.toBytes("f"), Bytes.toBytes("c"), 1520865214884L);
         table.delete(delete);
 
 
