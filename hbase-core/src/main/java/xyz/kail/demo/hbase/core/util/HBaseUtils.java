@@ -29,8 +29,8 @@ public class HBaseUtils {
 
     public static Connection getConnection() {
         Configuration hbaseConf = HBaseConfiguration.create();
-//        hbaseConf.set("hbase.zookeeper.quorum", "s02.hadoop.ttp.wx:2181,s03.hadoop.ttp.wx:2181,s04.hadoop.ttp.wx:2181");
-        hbaseConf.set("hbase.zookeeper.quorum", "localhost");
+        hbaseConf.set("hbase.zookeeper.quorum", "s02.hadoop.ttp.wx:2181,s03.hadoop.ttp.wx:2181,s04.hadoop.ttp.wx:2181");
+//        hbaseConf.set("hbase.zookeeper.quorum", "localhost");
         //        hbaseConf.set("hbase.zookeeper.property.clientPort", "2181");
         //        hbaseConf.set("hbase.master", "192.168.1.100:600000");
         /*
