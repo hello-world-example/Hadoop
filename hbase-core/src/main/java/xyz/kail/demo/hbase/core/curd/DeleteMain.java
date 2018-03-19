@@ -22,8 +22,9 @@ public class DeleteMain {
 
         Table table = connection.getTable(TableName.valueOf("test"));
 
-        Delete delete = new Delete(Bytes.toBytes("r1"));
-        delete.addColumn(Bytes.toBytes("e"), Bytes.toBytes("c1"), 15L);
+        Delete delete = new Delete(Bytes.toBytes("k1"));
+        delete.addColumn(Bytes.toBytes("f"), Bytes.toBytes("c"), 1520865214884L);
+        delete.addColumns(Bytes.toBytes("f"), Bytes.toBytes("c"), 1520865214884L);
         table.delete(delete);
 
 
