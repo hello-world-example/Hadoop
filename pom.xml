@@ -10,6 +10,7 @@
     <modules>
         <module>hadoop-core</module>
         <module>hbase-core</module>
+        <module>hbase-async</module>
     </modules>
     <packaging>pom</packaging>
 
