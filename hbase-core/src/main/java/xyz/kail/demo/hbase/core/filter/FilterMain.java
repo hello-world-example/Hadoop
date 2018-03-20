@@ -8,14 +8,7 @@ import org.apache.hadoop.hbase.client.ResultScanner;
 import org.apache.hadoop.hbase.client.Scan;
 import org.apache.hadoop.hbase.client.Table;
 import org.apache.hadoop.hbase.exceptions.DeserializationException;
-import org.apache.hadoop.hbase.filter.BinaryComparator;
-import org.apache.hadoop.hbase.filter.CompareFilter;
-import org.apache.hadoop.hbase.filter.FilterBase;
-import org.apache.hadoop.hbase.filter.FilterList;
-import org.apache.hadoop.hbase.filter.FuzzyRowFilter;
-import org.apache.hadoop.hbase.filter.KeyOnlyFilter;
-import org.apache.hadoop.hbase.filter.PrefixFilter;
-import org.apache.hadoop.hbase.filter.SingleColumnValueFilter;
+import org.apache.hadoop.hbase.filter.*;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.apache.hadoop.hbase.util.Pair;
 
@@ -61,6 +54,7 @@ public class FilterMain {
 //        Pair<byte[], byte[]> pair = Pair.newPair(Bytes.toBytes("0000????"), new byte[]{0x01, 0x01, 0x01, 0x01, 0x00, 0x00, 0x00, 0x00});
         Pair<byte[], byte[]> pair = Pair.newPair(Bytes.toBytes("0000????"), new byte[]{0x00, 0x00, 0x00, 0x00, 0x01, 0x01, 0x01, 0x01});
         scan.setFilter(new FuzzyRowFilter(Arrays.asList(pair)));
+
 
 
         ResultScanner scanner = table.getScanner(scan);
