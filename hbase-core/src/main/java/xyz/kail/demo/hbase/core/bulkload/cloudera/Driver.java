@@ -91,7 +91,7 @@ public class Driver extends Configured implements Tool {
         job.setInputFormatClass(TextInputFormat.class);
         FileInputFormat.addInputPath(job, new Path(args[0]));
         FileOutputFormat.setOutputPath(job, new Path(args[1]));
-        HFileOutputFormat2.configureIncrementalLoad(job, wordCountTable, wordCountTable.getRegionLocator());
+//        HFileOutputFormat2.configureIncrementalLoad(job, wordCountTable, wordCountTable.getRegionLocator());
 
         return job.waitForCompletion(true) ? 1 : 0;
     }

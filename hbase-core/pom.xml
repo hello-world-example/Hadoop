@@ -12,8 +12,8 @@
     <artifactId>hbase-core</artifactId>
 
     <properties>
-        <!--<hbase.version>1.0.0</hbase.version>-->
-        <hbase.version>1.2.6</hbase.version>
+        <hbase.version>1.0.0</hbase.version>
+        <!--<hbase.version>1.2.6</hbase.version>-->
     </properties>
 
     <dependencies>
