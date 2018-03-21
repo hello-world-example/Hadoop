@@ -32,6 +32,7 @@ public class Main {
         conf.setFloat(HConstants.HFILE_BLOCK_CACHE_SIZE_KEY, 0);
         conf.set(HConstants.HBASE_DIR, "hdfs://s01.hadoop.ttp.wx:8020/hbase");
 
+
         int ret = ToolRunner.run(conf, new HFilePrettyPrinter(), args);
         System.exit(ret);
 
