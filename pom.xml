@@ -11,6 +11,7 @@
         <module>hadoop-core</module>
         <module>hbase-core</module>
         <module>hbase-async</module>
+        <module>hadoop-hdfs</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -37,6 +38,26 @@
             <name>Nexus aliyun</name>
             <url>http://maven.aliyun.com/nexus/content/groups/public</url>
         </repository>
+
+        <repository>
+            <id>snapshotsId</id>
+            <name>snapshots</name>
+            <url>http://172.16.2.101:8081/nexus/content/repositories/snapshots/</url>
+        </repository>
+
+        <repository>
+            <id>thirdpartyId</id>
+            <name>thirdparty</name>
+            <url>http://172.16.2.101:8081/nexus/content/repositories/thirdparty/</url>
+        </repository>
+
+        <repository>
+            <id>releasesId</id>
+            <name>releases</name>
+            <url>http://172.16.2.101:8081/nexus/content/repositories/releases/</url>
+        </repository>
+
+
     </repositories>
 
 
