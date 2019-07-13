@@ -13,7 +13,7 @@ import xyz.kail.demo.hbase.core.util.HBaseUtils;
 /**
  * TODO 注释
  *
- * @author kaibin.yang@ttpai.cn
+ * @author kail
  */
 public class DeleteMain {
 

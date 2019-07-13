@@ -13,7 +13,7 @@ import xyz.kail.demo.hbase.core.util.HBaseUtils;
 /**
  * create '_kail_test_remark', {NAME => 'remark', VERSIONS => 100000}
  *
- * @author kaibin.yang@ttpai.cn
+ * @author Kail
  */
 public class PutVersionMain {
 

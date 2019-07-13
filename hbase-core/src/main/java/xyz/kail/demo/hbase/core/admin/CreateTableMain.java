@@ -15,7 +15,7 @@ import xyz.kail.demo.hbase.core.util.HBaseUtils;
  * create '_kail_test_remark', {NAME => 'remark', VERSIONS => 100000}
  * {NAME => 'remark', DATA_BLOCK_ENCODING => 'NONE' ,BLOOMFILTER => 'ROW', REPLICATION_SCOPE => '0', VERSIONS => '100000', COMPRESSION => 'NONE', MIN_VERSIONS => '0', TTL=> 'FOREVER', KEEP_DELETED_CELLS => 'FALSE', BLOCKSIZE => '65536', IN_MEMORY => 'false', BLOCKCACHE => 'true'}
  *
- * @author kaibin.yang@ttpai.cn
+ * @author Kail
  */
 public class CreateTableMain {
 

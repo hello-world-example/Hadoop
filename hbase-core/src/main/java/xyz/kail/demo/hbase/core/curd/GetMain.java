@@ -17,7 +17,7 @@ import xyz.kail.demo.hbase.core.util.HBaseUtils;
  * count "rel_boss_operate_log_v1" 12042
  * count "test_boss_operate_log_v1" 1178
  *
- * @author kaibin.yang@ttpai.cn
+ * @author Kail
  */
 public class GetMain {
 

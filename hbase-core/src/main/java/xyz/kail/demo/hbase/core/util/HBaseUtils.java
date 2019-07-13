@@ -23,7 +23,7 @@ import java.util.concurrent.Executors;
 /**
  * TODO 注释
  *
- * @author kaibin.yang@ttpai.cn
+ * @author kail
  */
 public class HBaseUtils {
 
