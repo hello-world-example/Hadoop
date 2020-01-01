@@ -1,2 +1,2 @@
 # big-data
-hadoop 、hbase
+hadoop

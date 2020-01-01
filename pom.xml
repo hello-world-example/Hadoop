@@ -9,8 +9,6 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>hadoop-core</module>
-        <module>hbase-core</module>
-        <module>hbase-async</module>
         <module>hadoop-hdfs</module>
     </modules>
     <packaging>pom</packaging>
