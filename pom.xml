@@ -5,14 +5,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>xyz.kail.demo</groupId>
-    <artifactId>big-data</artifactId>
+    <artifactId>Hadoop</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
     <modules>
         <module>hadoop-core</module>
         <module>hadoop-hdfs</module>
     </modules>
-    <packaging>pom</packaging>
-
 
     <dependencies>
 
