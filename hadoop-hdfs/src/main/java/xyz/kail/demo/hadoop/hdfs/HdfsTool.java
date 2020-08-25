@@ -8,7 +8,8 @@ import java.util.function.Consumer;
 
 public class HdfsTool {
 
-    public static final String FS_DEFAULT_FS = "hdfs://172.16.2.34:8020";
+//    public static final String FS_DEFAULT_FS = "hdfs://localhost:8020";
+    public static final String FS_DEFAULT_FS = "hdfs://localhost:9000";
 
     public static final String HADOOP_USER_NAME = "hadoop";
 
