@@ -15,7 +15,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://hello-world-example.github.io/Hadoop/_sidebar/</guid>
-      <description> Quick Start   Docker 方式安装   HDFS YARN MapReduce  </description>
+      <description> Quick Start   Docker 方式安装  端口变化   HDFS YARN MapReduce  </description>
     </item>
     
     <item>
@@ -25,6 +25,16 @@
       
       <guid>https://hello-world-example.github.io/Hadoop/docs/Quick-Start/Install-by-Docker/</guid>
       <description>Docker 方式安装 快速安装 $ git clone https://github.com/big-data-europe/docker-hadoop.git $ cd docker-hadoop # 选择版本 $ git tag --list # 切换到制定版本 $ git branch hadoop-3.2.1 2.0.0-hadoop3.2.1-java8 $ git checkout hadoop-3.2.1 # 启动 $ docker-compose up -d # 退出并删除容器 # $ docker-compose down 依赖的镜像    Docker 镜像加速   $ docker images REPOSITORY TAG IMAGE ID CREATED SIZE bde2020/hadoop-nodemanager 2.0.0-hadoop3.2.1-java8 4e47dabd148f 6 months ago 1.37GB bde2020/hadoop-resourcemanager 2.0.0-hadoop3.2.1-java8 3deba4a1885f 6 months ago 1.37GB bde2020/hadoop-namenode 2.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://hello-world-example.github.io/Hadoop/docs/Quick-Start/Port-Change/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://hello-world-example.github.io/Hadoop/docs/Quick-Start/Port-Change/</guid>
+      <description>端口变化  http://localhost:9870/conf 页面查看对应的端口配置
+    应用 配置 Haddop 2.x port Haddop 3 port     NameNode fs.defaultFS 8020 9820   NameNode HTTP UI dfs.namenode.http-address 50070 9870   NameNode HTTPs UI dfs.namenode.https-address 50470 9871         Secondary NN HTTP UI dfs.namenode.secondary.https-address 50091 9869   Secondary NN HTTPs UI dfs.namenode.secondary.http-address 50090 9868         DataNode dfs.</description>
     </item>
     
   </channel>

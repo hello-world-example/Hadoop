@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="端口变化  http://localhost:9870/conf 页面查看对应的端口配置
+    应用 配置 Haddop 2.x port Haddop 3 port     NameNode fs.defaultFS 8020 9820   NameNode HTTP UI dfs.namenode.http-address 50070 9870   NameNode HTTPs UI dfs.namenode.https-address 50470 9871         Secondary NN HTTP UI dfs.namenode.secondary.https-address 50091 9869   Secondary NN HTTPs UI dfs.namenode.secondary.http-address 50090 9868         DataNode dfs."><meta property="og:title" content="" />
+<meta property="og:description" content="端口变化  http://localhost:9870/conf 页面查看对应的端口配置
+    应用 配置 Haddop 2.x port Haddop 3 port     NameNode fs.defaultFS 8020 9820   NameNode HTTP UI dfs.namenode.http-address 50070 9870   NameNode HTTPs UI dfs.namenode.https-address 50470 9871         Secondary NN HTTP UI dfs.namenode.secondary.https-address 50091 9869   Secondary NN HTTPs UI dfs.namenode.secondary.http-address 50090 9868         DataNode dfs." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://hello-world-example.github.io/Hadoop/docs/Quick-Start/Port-Change/" />
+
+<title>Port Change | Hadoop</title>
+<link rel="icon" href="/Hadoop/favicon.png" type="image/x-icon">
+
+
+<link rel="stylesheet" href="/Hadoop/book.min.d436f463c9471cfab26a8b71cd2f50b6abf5225806391453da4ca111d1834fef.css" integrity="sha256-1Db0Y8lHHPqyaotxzS9Qtqv1IlgGORRT2kyhEdGDT&#43;8=">
+
+
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body>
+  <input type="checkbox" class="hidden" id="menu-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      
+  <nav>
+<h2 class="book-brand">
+  <a href="/Hadoop"><span>Hadoop</span>
+  </a>
+</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+  <ul>
+<li><strong>Quick Start</strong>
+<ul>
+<li>
+  <a href="/Hadoop/docs/Quick-Start/Install-by-Docker/">Docker 方式安装</a></li>
+<li>
+  <a href="/Hadoop/docs/Quick-Start/Port-Change/"class=active>端口变化</a></li>
+</ul>
+</li>
+<li><strong>HDFS</strong></li>
+<li><strong>YARN</strong></li>
+<li><strong>MapReduce</strong></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/Hadoop/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>Port Change</strong>
+
+  <label for="toc-control">
+    <img src="/Hadoop/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+  </label>
+</div>
+
+
+  
+    <input type="checkbox" class="hidden" id="toc-control" />
+    <aside class="hidden clearfix">
+      
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#端口变化">端口变化</a>
+      <ul>
+        <li><a href="#read-more">Read More</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+    </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><h1 id="端口变化">端口变化</h1>
+<blockquote>
+<p>http://localhost:9870/conf 页面查看对应的端口配置</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>应用</th>
+<th align="left">配置</th>
+<th>Haddop 2.x port</th>
+<th>Haddop 3 port</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>NameNode</strong></td>
+<td align="left"><code>fs.defaultFS</code></td>
+<td>8020</td>
+<td>9820</td>
+</tr>
+<tr>
+<td><strong>NameNode HTTP UI</strong></td>
+<td align="left"><code>dfs.namenode.http-address</code></td>
+<td>50070</td>
+<td>9870</td>
+</tr>
+<tr>
+<td>NameNode HTTPs UI</td>
+<td align="left">dfs.namenode.https-address</td>
+<td>50470</td>
+<td>9871</td>
+</tr>
+<tr>
+<td></td>
+<td align="left"></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Secondary NN HTTP UI</td>
+<td align="left">dfs.namenode.secondary.https-address</td>
+<td>50091</td>
+<td>9869</td>
+</tr>
+<tr>
+<td>Secondary NN HTTPs UI</td>
+<td align="left">dfs.namenode.secondary.http-address</td>
+<td>50090</td>
+<td>9868</td>
+</tr>
+<tr>
+<td></td>
+<td align="left"></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>DataNode</td>
+<td align="left">dfs.datanode.address</td>
+<td>50010</td>
+<td>9866</td>
+</tr>
+<tr>
+<td>DataNode IPC</td>
+<td align="left">dfs.datanode.ipc.address</td>
+<td>50020</td>
+<td>9867</td>
+</tr>
+<tr>
+<td>DataNode HTTP UI</td>
+<td align="left">dfs.datanode.http.address</td>
+<td>50075</td>
+<td>9864</td>
+</tr>
+<tr>
+<td>DataNode HTTPs UI</td>
+<td align="left">dfs.datanode.https.address</td>
+<td>50475</td>
+<td>9865</td>
+</tr>
+</tbody>
+</table>
+<h2 id="read-more">Read More</h2>
+<ul>
+<li>
+  <a href="https://blog.csdn.net/qq_31454379/article/details/105439752">Hadoop2.x与Hadoop3.x的默认端口变化</a></li>
+</ul>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex justify-between">
+
+
+
+
+
+  <div>
+    <a class="flex align-center" href="https://github.com/hello-world-example/Hadoop/edit/master/HuGo/content/docs/Quick-Start/Port-Change.md" target="_blank" rel="noopener">
+      <img src="/Hadoop/svg/edit.svg" class="book-icon" alt="Edit" />
+      <span>Edit this page</span>
+    </a>
+  </div>
+
+</div>
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#端口变化">端口变化</a>
+      <ul>
+        <li><a href="#read-more">Read More</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+ 
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
